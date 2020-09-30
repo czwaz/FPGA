@@ -51,21 +51,21 @@ set_global_assignment -name VHDL_FILE seven_segment_test.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_location_assignment PIN_88 -to SW1
-set_location_assignment PIN_91 -to SW2
-set_location_assignment PIN_90 -to SW3
-set_location_assignment PIN_89 -to SW4
-set_location_assignment PIN_143 -to A
-set_location_assignment PIN_144 -to B
-set_location_assignment PIN_1 -to C
-set_location_assignment PIN_2 -to G
-set_location_assignment PIN_3 -to DP
-set_location_assignment PIN_141 -to D
-set_location_assignment PIN_142 -to E
-set_location_assignment PIN_138 -to F
 set_location_assignment PIN_24 -to clk
 set_location_assignment PIN_133 -to DIG1
 set_location_assignment PIN_136 -to DIG2
 set_location_assignment PIN_135 -to DIG3
 set_location_assignment PIN_137 -to DIG4
+set_location_assignment PIN_91 -to SW[1]
+set_location_assignment PIN_90 -to SW[2]
+set_location_assignment PIN_89 -to SW[3]
+set_location_assignment PIN_88 -to SW[0]
+set_location_assignment PIN_143 -to LEDs[0]
+set_location_assignment PIN_144 -to LEDs[1]
+set_location_assignment PIN_1 -to LEDs[2]
+set_location_assignment PIN_141 -to LEDs[3]
+set_location_assignment PIN_142 -to LEDs[4]
+set_location_assignment PIN_138 -to LEDs[5]
+set_location_assignment PIN_2 -to LEDs[6]
+set_location_assignment PIN_3 -to LEDs[7]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

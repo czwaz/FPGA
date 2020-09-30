@@ -8,19 +8,9 @@ entity seven_segment_test is
 	port (
 		clk : in std_logic;
 		
-		SW1 : in std_logic;
-		SW2 : in std_logic;
-		SW3 : in std_logic;
-		SW4 : in std_logic;
+		SW : in std_logic_vector (3 downto 0);
 		
-		A : out std_logic;
-		B : out std_logic;
-		C : out std_logic;
-		D : out std_logic;
-		E : out std_logic;
-		F : out std_logic;
-		G : out std_logic;
-		DP : out std_logic;
+		LEDs : out std_logic_vector (0 to 7);
 		
 		DIG1 : out std_logic;
 		DIG2 : out std_logic;
@@ -32,19 +22,30 @@ end entity seven_segment_test;
 
 architecture behaviour of seven_segment_test is
 begin
-
-	A <= '1';
-	B <= '1';
-	C <= '1';
-	D <= '1';
-	E <= '1';
-	F <= '1';
-	G <= '1';
-	DP <= '1';
+	process (clk)
 	
-	DIG1 <= '0';
-	DIG2 <= '0';
-	DIG3 <= '0';
-	DIG4 <= '0';
+		variable clk_cnt : integer := 0;
+		variable char : std_logic_vector (0 to 7) := "10000000";
+	
+	begin
+	
+		DIG1 <= '0';
+		DIG2 <= '0';
+		DIG3 <= '0';
+		DIG4 <= '0';
+	
+		if clk'event and clk = '1' then
+		
+			if clk_cnt = 48000000/2 then
+				clk_cnt := 0;
+			else
+				clk_cnt := clk_cnt + 1;
+			end if;
+			
+			LEDs <= char;
+	
+		end if;
+		
+	end process;
 
 end architecture behaviour;

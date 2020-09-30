@@ -3,17 +3,32 @@ FPGA: EP4CE6E22C8
 CLOCK:
 	CLK	-->	PIN_24
 
-BUTTONS: (active LOW!!!)
+BUTTONS:			(active LOW)
 	S1	-->	PIN_88
 	S2	-->	PIN_91
 	S3	-->	PIN_90
 	S4	-->	PIN_89
 
-LEDS: (active LOW!!!)
-	D1 	Power LED???
+LEDS:				(active LOW)
+	D1 	Power LED
 	D2	-->	PIN_3
 	D3	-->	PIN_2
 	D4	-->	PIN_1
 	D5	-->	PIN_141
+
+7 Segment:			(active HIGH)
+	A	-->	PIN_143
+	B	-->	PIN_144
+	C	-->	PIN_1
+	D	-->	PIN_141
+	E	-->	PIN_142
+	F	-->	PIN_138
+	G	-->	PIN_2
+	DP	-->	PIN_3
+				(active LOW)
+	EN1	-->	PIN_133
+	EN2	-->	PIN_136
+	EN3	-->	PIN_135
+	EN4	-->	PIN_137
 
 Buzzer: LS1	-->	PIN_85
