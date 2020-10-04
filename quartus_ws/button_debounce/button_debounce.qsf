@@ -55,4 +55,7 @@ set_location_assignment PIN_24 -to clk_in
 set_location_assignment PIN_89 -to reset
 set_location_assignment PIN_3 -to btn_out
 set_location_assignment PIN_88 -to btn_in
+set_location_assignment PIN_2 -to led2
+set_location_assignment PIN_1 -to led3
+set_location_assignment PIN_141 -to led4
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
