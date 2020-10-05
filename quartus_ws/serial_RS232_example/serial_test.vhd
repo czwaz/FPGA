@@ -113,7 +113,7 @@ BEGIN
 		CASE rx_fsm_state IS
 
 			WHEN SAMPLE_STOP_SET_OUTPUT =>
-				led_vec <= data ( 3 downto 0 );
+				led_vec <= not data ( 3 downto 0 );
 				
 			WHEN OTHERS =>
 				
