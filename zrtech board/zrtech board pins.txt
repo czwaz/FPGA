@@ -31,3 +31,10 @@ Buzzer: 	LS1	-->	PIN_85
 
 RS232:		TX-FPGA	-->	PIN_86
 			RX-FPGA	-->	PIN_87
+			
+PS2:		PS2_DAT	--> PIN_98
+			PS2_CLK	-->	PIN_99
+
+VGA:		HSYNC	-->	PIN_100
+			VSYNC	--> PIN_101
+			
