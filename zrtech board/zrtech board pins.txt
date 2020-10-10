@@ -13,15 +13,15 @@ LEDS:		D1 	Power LED
 			D4	-->	PIN_1
 			D5	-->	PIN_141
 
-7 Segment:	A	-->	PIN_143		(active HIGH)
-			B	-->	PIN_144
-			C	-->	PIN_1
-			D	-->	PIN_141
-			E	-->	PIN_142
-			F	-->	PIN_138
-			G	-->	PIN_2
-			DP	-->	PIN_3
-				
+7 Segment:	A	-->	PIN_143		(active HIGH)		  AAAAA
+			B	-->	PIN_144							F		B
+			C	-->	PIN_1							F		B
+			D	-->	PIN_141							F		B
+			E	-->	PIN_142							  GGGGG
+			F	-->	PIN_138							E 		C
+			G	-->	PIN_2							E		C
+			DP	-->	PIN_3							E		C
+													  DDDDD	  DP
 			EN1	-->	PIN_133		(active LOW)
 			EN2	-->	PIN_136
 			EN3	-->	PIN_135
