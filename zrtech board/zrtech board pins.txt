@@ -22,10 +22,11 @@ LEDS:		D1 	Power LED
 			G	-->	PIN_2							E		C
 			DP	-->	PIN_3							E		C
 													  DDDDD	  DP
-			EN1	-->	PIN_133		(active LOW)
+
+			EN1	-->	PIN_133		(active LOW)	left-digit
 			EN2	-->	PIN_136
 			EN3	-->	PIN_135
-			EN4	-->	PIN_137
+			EN4	-->	PIN_137						right-digit
 
 Buzzer: 	LS1	-->	PIN_85
 
