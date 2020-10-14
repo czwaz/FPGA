@@ -39,36 +39,53 @@ uut:    memory_async port map (rst => rst_tb, write_enable_L => we_l_tb,
 
 tb:	process
 begin
-	wait for 0 ps;
+	wait for 1 ps;
 	LED_in_pos_tb <= 0;
 	LED_in_data_tb <= x"00";
-	we_l_tb <= '0';
+    LED_out_pos_tb <= 0;
+	we_l_tb <= '1';
     rst_tb <= '0';
     wait for 1 ps;
     rst_tb <= '1';
     wait for 1 ps;
-    
-    we_l_tb <= '0';
+   
+-- store 0xAA on memory address 0
 	LED_in_pos_tb <= 0;
-	LED_in_data_tb <= x"aa";
+	LED_in_data_tb <= x"AA";
     wait for 2 ps;
-  
+    we_l_tb <= '0';
+    wait for 2 ps;
+    we_l_tb <= '1';
+    wait for 10 ps;
+
+-- store 0x55 on memory address 1  
     LED_in_pos_tb <= 1;
 	LED_in_data_tb <= x"55";
     wait for 2 ps;
-    
-    LED_in_pos_tb <= 2;
-	LED_in_data_tb <= x"a0";
-    wait for 2 ps;
-    
-    LED_in_pos_tb <= 3;
-	LED_in_data_tb <= x"ff";
+    we_l_tb <= '0';
     wait for 2 ps;
     we_l_tb <= '1';
-    rst_tb <= '0';
-    wait for 1 ps;
-    rst_tb <= '1';
-    
+    wait for 10 ps;
+  
+-- store 0xA0 on memory address 2 
+    LED_in_pos_tb <= 2;
+	LED_in_data_tb <= x"A0";
+    wait for 2 ps;
+    we_l_tb <= '0';
+    wait for 2 ps;
+    we_l_tb <= '1';
+    wait for 10 ps;
+ 
+-- store 0xFF on memory address 3  
+    LED_in_pos_tb <= 3;
+	LED_in_data_tb <= x"FF";
+    wait for 2 ps;
+    we_l_tb <= '0';
+    wait for 2 ps;
+    we_l_tb <= '1';
+    wait for 10 ps;
+
+-- output one memory address after another on data-out    
     LED_out_pos_tb <= 0;
     wait for 2 ps;
     LED_out_pos_tb <= 1;
@@ -78,7 +95,6 @@ begin
     LED_out_pos_tb <= 3;
     wait for 2 ps;
 
-	wait for 100 ps;
 	wait;
     
 	

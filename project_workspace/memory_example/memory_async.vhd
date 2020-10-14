@@ -8,7 +8,7 @@ use IEEE.numeric_std.all;
 entity memory_async is
     generic (
         SIZE : integer := 4
-        );
+    );
     port (
         rst             :   in  std_logic;
         write_enable_L  :   in  std_logic;
@@ -16,7 +16,7 @@ entity memory_async is
         LED_in_data     :   in  std_logic_vector (7 downto 0);
         LED_out_pos     :   in  integer range 0 to SIZE-1;
         LED_out_data    :   out std_logic_vector (7 downto 0)
-        );
+    );
 end entity;
 
 architecture behaviour of memory_async is
