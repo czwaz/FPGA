@@ -2,16 +2,16 @@ FPGA: EP4CE6E22C8
 
 CLOCK:		CLK	-->	PIN_24
 
-BUTTONS:	S1	-->	PIN_88		(active LOW)
+BUTTONS:	S1	-->	PIN_88		(active LOW)	right-button
 			S2	-->	PIN_91
 			S3	-->	PIN_90
-			S4	-->	PIN_89
+			S4	-->	PIN_89						left-button
 
-LEDS:		D1 	Power LED
+LEDS:		D1 	Power LED						right-led
 			D2	-->	PIN_3		(active LOW)
 			D3	-->	PIN_2
 			D4	-->	PIN_1
-			D5	-->	PIN_141
+			D5	-->	PIN_141						left-led
 
 7 Segment:	A	-->	PIN_143		(active HIGH)		  AAAAA
 			B	-->	PIN_144							F		B
