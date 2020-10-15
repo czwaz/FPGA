@@ -6,93 +6,103 @@ use IEEE.numeric_std.all;
 -- date: 20201014
 
 entity memory_async_tb is
-    generic (SIZE : integer := 4);
+    generic (
+        MEM_SIZE    :   integer := 4;
+        ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+        DATA_WIDTH  :   integer := 8
+    );
 end entity;
 	
 architecture tb of memory_async_tb is
 
 	component memory_async is
         generic (
-            SIZE : integer := 4
+            MEM_SIZE    :   integer := 4;
+            ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+            DATA_WIDTH  :   integer := 8
         );
-		port (
-			rst             :   in  std_logic;
-			write_enable_L  :   in  std_logic;
-			LED_in_pos      :   in  integer range 0 to SIZE-1;
-			LED_in_data     :   in  std_logic_vector (7 downto 0);
-			LED_out_pos     :   in  integer range 0 to SIZE-1;
-			LED_out_data    :   out std_logic_vector (7 downto 0)
+        port (
+            rst_n       :   in  std_logic;
+            wr_en_n_in  :   in  std_logic;
+            wr_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
+            wr_data_in  :   in  std_logic_vector (DATA_WIDTH-1 downto 0);
+            rd_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
+            rd_data_out :   out std_logic_vector (DATA_WIDTH-1 downto 0)
         );
 	end component;
 
-signal	rst_tb	:	std_logic;
-signal	we_l_tb	:	std_logic;
-signal	LED_in_pos_tb	:	integer range 0 to SIZE-1;
-signal  LED_in_data_tb  :   std_logic_vector (7 downto 0);
-signal  LED_out_pos_tb  :   integer range 0 to SIZE-1;
+signal	rst_tb      :	std_logic;
+signal	we_n_tb     :	std_logic;
+signal	wr_addr_tb  :	std_logic_vector (ADDR_WIDTH-1 downto 0);
+signal  wr_data_tb  :   std_logic_vector (DATA_WIDTH-1 downto 0);
+signal  rd_addr_tb  :   std_logic_vector (ADDR_WIDTH-1 downto 0);
 
 begin
 
-uut:    memory_async port map (rst => rst_tb, write_enable_L => we_l_tb, 
-               LED_in_pos => LED_in_pos_tb, LED_in_data => LED_in_data_tb,
-               LED_out_pos => LED_out_pos_tb);
+uut:    memory_async port map (
+            rst_n       => rst_tb,
+            wr_en_n_in  => we_n_tb,
+            wr_addr_in  => wr_addr_tb,
+            wr_data_in  => wr_data_tb,
+            rd_addr_in  => rd_addr_tb
+        );
 
 tb:	process
 begin
 	wait for 1 ps;
-	LED_in_pos_tb <= 0;
-	LED_in_data_tb <= x"00";
-    LED_out_pos_tb <= 0;
-	we_l_tb <= '1';
+	wr_addr_tb <= "00";
+	wr_data_tb <= x"00";
+    rd_addr_tb <= "00";
+	we_n_tb <= '1';
     rst_tb <= '0';
     wait for 1 ps;
     rst_tb <= '1';
     wait for 1 ps;
    
 -- store 0xAA on memory address 0
-	LED_in_pos_tb <= 0;
-	LED_in_data_tb <= x"AA";
+	wr_addr_tb <= "00";
+	wr_data_tb <= x"AA";
     wait for 2 ps;
-    we_l_tb <= '0';
+    we_n_tb <= '0';
     wait for 2 ps;
-    we_l_tb <= '1';
+    we_n_tb <= '1';
     wait for 10 ps;
 
 -- store 0x55 on memory address 1  
-    LED_in_pos_tb <= 1;
-	LED_in_data_tb <= x"55";
+    wr_addr_tb <= "01";
+	wr_data_tb <= x"55";
     wait for 2 ps;
-    we_l_tb <= '0';
+    we_n_tb <= '0';
     wait for 2 ps;
-    we_l_tb <= '1';
+    we_n_tb <= '1';
     wait for 10 ps;
   
 -- store 0xA0 on memory address 2 
-    LED_in_pos_tb <= 2;
-	LED_in_data_tb <= x"A0";
+    wr_addr_tb <= "10";
+	wr_data_tb <= x"A0";
     wait for 2 ps;
-    we_l_tb <= '0';
+    we_n_tb <= '0';
     wait for 2 ps;
-    we_l_tb <= '1';
+    we_n_tb <= '1';
     wait for 10 ps;
  
 -- store 0xFF on memory address 3  
-    LED_in_pos_tb <= 3;
-	LED_in_data_tb <= x"FF";
+    wr_addr_tb <= "11";
+	wr_data_tb <= x"FF";
     wait for 2 ps;
-    we_l_tb <= '0';
+    we_n_tb <= '0';
     wait for 2 ps;
-    we_l_tb <= '1';
+    we_n_tb <= '1';
     wait for 10 ps;
 
 -- output one memory address after another on data-out    
-    LED_out_pos_tb <= 0;
+    rd_addr_tb <= "00";
     wait for 2 ps;
-    LED_out_pos_tb <= 1;
+    rd_addr_tb <= "01";
     wait for 2 ps;
-    LED_out_pos_tb <= 2;
+    rd_addr_tb <= "10";
     wait for 2 ps;
-    LED_out_pos_tb <= 3;
+    rd_addr_tb <= "11";
     wait for 2 ps;
 
 	wait;

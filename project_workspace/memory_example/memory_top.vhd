@@ -6,15 +6,22 @@ use IEEE.numeric_std.all;
 -- date: 20201014
 
 entity memory_top is
+    generic (
+        MEM_SIZE    :   integer := 4;
+        ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+        DATA_WIDTH  :   integer := 8
+    );
     port (
-       clk  :   in  std_logic;
-       rst  :   in  std_logic;
-       pos_in   :   in  integer range 0 to 3;
-       --pos_out  :   in  integer range 0 to 3;
-       data_out :   out std_logic_vector (7 downto 0);
-       we_l     :   in  std_logic;
-       
-       led_pos  :   out std_logic_vector (3 downto 0)
+        rst_n       :   in  std_logic;
+        clk         :   in  std_logic;
+        
+        we_n        :   in  std_logic;
+        pos_in      :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
+        -- data in not used (dummy value used for testing)
+        -- addr out not used (pos_in used for testing)
+        data_out    :   out std_logic_vector (DATA_WIDTH-1 downto 0);
+        
+        led_pos     :   out std_logic_vector (3 downto 0) -- for testing
     );
 end entity;
 
@@ -22,43 +29,51 @@ architecture behaviour of memory_top is
 
     component memory_async is
         generic (
-            SIZE : integer := 4
+            MEM_SIZE    :   integer := 4;
+            ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+            DATA_WIDTH  :   integer := 8
         );
         port (
-            rst             :   in  std_logic;
-            write_enable_L  :   in  std_logic;
-            LED_in_pos      :   in  integer range 0 to SIZE-1;
-            LED_in_data     :   in  std_logic_vector (7 downto 0);
-            LED_out_pos     :   in  integer range 0 to SIZE-1;
-            LED_out_data    :   out std_logic_vector (7 downto 0)
+            rst_n       :   in  std_logic;
+            wr_en_n_in  :   in  std_logic;
+            wr_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
+            wr_data_in  :   in  std_logic_vector (DATA_WIDTH-1 downto 0);
+            rd_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
+            rd_data_out :   out std_logic_vector (DATA_WIDTH-1 downto 0)
         );
     end component;
 
-    signal rst_sig  :   std_logic;
-    signal write_enable_L_sig   :   std_logic;
-    signal LED_in_pos_sig   :   integer range 0 to 3;
-    signal LED_in_data_sig  :   std_logic_vector (7 downto 0);
-    signal LED_out_data_sig :   std_logic_vector (7 downto 0);
-    signal LED_out_pos_sig  :   integer range 0 to 3;
+    signal rst_n_sig    :   std_logic;
+    signal wr_en_n_sig  :   std_logic;
+    signal wr_addr_sig  :   std_logic_vector (ADDR_WIDTH-1 downto 0);
+    signal wr_data_sig  :   std_logic_vector (DATA_WIDTH-1 downto 0);
+    signal rd_addr_sig  :   std_logic_vector (ADDR_WIDTH-1 downto 0);
+    signal rd_data_sig  :   std_logic_vector (DATA_WIDTH-1 downto 0);
 
 begin
 
-uut: memory_async port map (rst => rst_sig, write_enable_L => write_enable_L_sig, LED_in_pos => LED_in_pos_sig,
-                LED_in_data => LEd_in_data_sig, LED_out_data => LED_out_data_sig, LED_out_pos => LED_out_pos_sig);
+uut: memory_async port map (
+                    rst_n       => rst_n_sig,
+                    wr_en_n_in  => wr_en_n_sig,
+                    wr_addr_in  => wr_addr_sig,
+                    wr_data_in  => wr_data_sig,
+                    rd_addr_in  => rd_addr_sig,
+                    rd_data_out => rd_data_sig
+                  );
 
-    rst_sig <= rst;
-    write_enable_L_sig <= we_l;
-    LED_in_pos_sig <= pos_in;
-    LED_out_pos_sig <= pos_in;
+    rst_n_sig   <= rst_n;
+    wr_en_n_sig <= we_n;
+    wr_addr_sig <= pos_in;  -- set rd and wr-addr to same value for testing
+    rd_addr_sig <= pos_in;  -- set rd and wr-addr to same value for testing
     
-    LED_in_data_sig <= "01010101";
+    wr_data_sig <= "01010101"; -- dummy value for testing
     
 
-    data_out(7 downto 0) <= LED_out_data_sig;
+    data_out(DATA_WIDTH-1 downto 0) <= rd_data_sig;
     
-    led_pos <= "1110" when LED_in_pos_sig = 0 else
-                "1101" when LED_in_pos_sig = 1 else
-                "1011" when LED_in_pos_sig = 2 else
-                "0111";
+    led_pos <= "1110" when wr_addr_sig = "00" else
+               "1101" when wr_addr_sig = "01" else
+               "1011" when wr_addr_sig = "11" else
+               "0111";
 
 end architecture;

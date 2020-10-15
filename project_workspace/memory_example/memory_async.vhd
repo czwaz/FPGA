@@ -3,44 +3,45 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 -- author: CZW
--- date: 20201014
+-- date: 20201014/20201015
 
 entity memory_async is
     generic (
-        SIZE : integer := 4
+        MEM_SIZE    :   integer := 4;
+        ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+        DATA_WIDTH  :   integer := 8
     );
     port (
-        rst             :   in  std_logic;
-        write_enable_L  :   in  std_logic;
-        LED_in_pos      :   in  integer range 0 to SIZE-1;
-        LED_in_data     :   in  std_logic_vector (7 downto 0);
-        LED_out_pos     :   in  integer range 0 to SIZE-1;
-        LED_out_data    :   out std_logic_vector (7 downto 0)
+        rst_n       :   in  std_logic;
+        wr_en_n_in  :   in  std_logic;
+        wr_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
+        wr_data_in  :   in  std_logic_vector (DATA_WIDTH-1 downto 0);
+        rd_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
+        rd_data_out :   out std_logic_vector (DATA_WIDTH-1 downto 0)
     );
 end entity;
 
 architecture behaviour of memory_async is
 
 begin
-
-    process (rst, write_enable_L, LED_out_pos, LED_in_data, LED_in_pos)
+    -- rewrite code to don't use a process
+    process (rst_n, wr_en_n_in, wr_addr_in, wr_data_in, rd_addr_in)
     
-        type mem_array is array (SIZE-1 downto 0) of std_logic_vector (7 downto 0);
+        type mem_array is array (MEM_SIZE-1 downto 0) of std_logic_vector (DATA_WIDTH-1 downto 0);
     
         variable mem : mem_array;
     
     begin
     
-        if (rst = '0') then
-            mem := (others => "00000000");
+        if (rst_n = '0') then
+            mem := (others => (others => '0'));
             
-        elsif (write_enable_L = '0') then
-            mem(LED_in_pos) := LED_in_data;
+        elsif (wr_en_n_in = '0') then
+            mem(to_integer(unsigned(wr_addr_in))) := wr_data_in;
             
         end if;
         
-        LED_out_data <= mem(LED_out_pos);
-    
+        rd_data_out <= mem(to_integer(unsigned(rd_addr_in)));
     
     end process;
 
