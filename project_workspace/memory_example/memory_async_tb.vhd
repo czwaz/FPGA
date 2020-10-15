@@ -8,7 +8,7 @@ use IEEE.numeric_std.all;
 entity memory_async_tb is
     generic (
         MEM_SIZE    :   integer := 4;
-        ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+        ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)
         DATA_WIDTH  :   integer := 8
     );
 end entity;
