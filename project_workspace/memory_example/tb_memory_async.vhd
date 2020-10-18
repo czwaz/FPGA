@@ -5,7 +5,7 @@ use IEEE.numeric_std.all;
 -- author: CZW
 -- date: 20201014
 
-entity memory_async_tb is
+entity tb_memory_async is
     generic (
         MEM_SIZE    :   integer := 4;
         ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)
@@ -13,7 +13,7 @@ entity memory_async_tb is
     );
 end entity;
 	
-architecture tb of memory_async_tb is
+architecture tb of tb_memory_async is
 
 	component memory_async is
         generic (
@@ -23,6 +23,7 @@ architecture tb of memory_async_tb is
         );
         port (
             rst_n       :   in  std_logic;
+            
             wr_en_n_in  :   in  std_logic;
             wr_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
             wr_data_in  :   in  std_logic_vector (DATA_WIDTH-1 downto 0);
@@ -32,6 +33,7 @@ architecture tb of memory_async_tb is
 	end component;
 
 signal	rst_tb      :	std_logic;
+
 signal	we_n_tb     :	std_logic;
 signal	wr_addr_tb  :	std_logic_vector (ADDR_WIDTH-1 downto 0);
 signal  wr_data_tb  :   std_logic_vector (DATA_WIDTH-1 downto 0);

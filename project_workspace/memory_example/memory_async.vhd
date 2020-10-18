@@ -13,6 +13,7 @@ entity memory_async is
     );
     port (
         rst_n       :   in  std_logic;
+        
         wr_en_n_in  :   in  std_logic;
         wr_addr_in  :   in  std_logic_vector (ADDR_WIDTH-1 downto 0);
         wr_data_in  :   in  std_logic_vector (DATA_WIDTH-1 downto 0);
@@ -28,9 +29,6 @@ architecture behaviour of memory_async is
 
 begin
     process (rst_n, wr_en_n_in, wr_addr_in, wr_data_in, rd_addr_in)
-    
-        --type mem_array is array (MEM_SIZE-1 downto 0) of std_logic_vector (DATA_WIDTH-1 downto 0);
-        --variable mem : mem_array;
     
     begin
     
