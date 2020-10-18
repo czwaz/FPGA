@@ -3,12 +3,11 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 -- author: CZW
--- date: 20201016
+-- date: 20201016/20201018
 
 entity memory_sync is
     generic (
-        MEM_SIZE    :   integer := 4;
-        ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+        ADDR_WIDTH  :   integer := 2;
         DATA_WIDTH  :   integer := 8
     );
     port (
@@ -23,8 +22,8 @@ entity memory_sync is
 end entity;
 
 architecture behaviour of memory_sync is
-    
-    type mem_array is array (MEM_SIZE-1 downto 0) of std_logic_vector (DATA_WIDTH-1 downto 0);
+
+    type mem_array is array (0 to 2 ** ADDR_WIDTH - 1) of std_logic_vector (DATA_WIDTH-1 downto 0);
     signal mem : mem_array;
 
 begin

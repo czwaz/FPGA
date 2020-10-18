@@ -7,8 +7,7 @@ use IEEE.numeric_std.all;
 
 entity memory_top is
     generic (
-        MEM_SIZE    :   integer := 4;
-        ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+        ADDR_WIDTH  :   integer := 2;
         DATA_WIDTH  :   integer := 8
     );
     port (
@@ -29,8 +28,7 @@ architecture behaviour of memory_top is
 
 --    component memory_async is
 --        generic (
---            MEM_SIZE    :   integer := 4;
---            ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+--            ADDR_WIDTH  :   integer := 2;
 --            DATA_WIDTH  :   integer := 8
 --        );
 --        port (
@@ -45,8 +43,7 @@ architecture behaviour of memory_top is
     
     component memory_sync is
         generic (
-            MEM_SIZE    :   integer := 4;
-            ADDR_WIDTH  :   integer := 2; --log_2(MEM_SIZE)   
+            ADDR_WIDTH  :   integer := 2;  
             DATA_WIDTH  :   integer := 8
         );
         port (
